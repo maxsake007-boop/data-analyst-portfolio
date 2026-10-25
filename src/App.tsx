@@ -12,7 +12,16 @@ import { ProjectModal } from './components/ProjectModal';
 
 export const App: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<ProjectCardData | null>(null);
+  const [isIntroReady, setIsIntroReady] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Trigger smooth entrance choreography immediately on initial page mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsIntroReady(true);
+    }, 60);
+    return () => clearTimeout(timer);
+  }, []);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -36,14 +45,14 @@ export const App: React.FC = () => {
       {/* 1. Subtle Interactive Particle Canvas Background */}
       <InteractiveBackground gridGap={36} interactionRadius={130} />
 
-      {/* 2. Top Header Navigation */}
-      <SiteHeader isReady={true} />
+      {/* 2. Top Header Navigation (slides down into view) */}
+      <SiteHeader isReady={isIntroReady} />
 
       {/* 3. Main Content Flow */}
       <main className="relative z-10 flex flex-col w-full pt-20 sm:pt-22">
-        {/* Hero Section */}
+        {/* Hero Section (choreographed staggered entrance) */}
         <HeroSection
-          isReady={true}
+          isReady={isIntroReady}
           onUnconfirmedLink={handleUnconfirmedLink}
         />
 
