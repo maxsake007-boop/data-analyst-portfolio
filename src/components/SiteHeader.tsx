@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
 
 interface SiteHeaderProps {
@@ -68,10 +69,11 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ isReady = true }) => {
   };
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-        isReady ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
-      } ${
+    <motion.header
+      initial={{ y: -50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-colors duration-300 ${
         isScrolled
           ? 'bg-white/90 backdrop-blur-md border-b border-zinc-200/80 shadow-xs py-3'
           : 'bg-white/70 backdrop-blur-sm border-b border-zinc-100/60 py-4'
@@ -130,6 +132,6 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ isReady = true }) => {
         </div>
 
       </div>
-    </header>
+    </motion.header>
   );
 };
