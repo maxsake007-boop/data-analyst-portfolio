@@ -28,8 +28,8 @@
 
 1. **Клонируйте репозиторий:**
    ```bash
-   git clone https://github.com/maxsake007-boop/makhset-portfolio.git
-   cd makhset-portfolio
+   git clone https://github.com/maxsake007-boop/data-analyst-portfolio.git
+   cd data-analyst-portfolio
    ```
 
 2. **Установите зависимости:**
