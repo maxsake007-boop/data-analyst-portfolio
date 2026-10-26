@@ -2,6 +2,8 @@
 
 > Интерактивное портфолио Data Analyst & BI-разработчика: 7 коммерческих проектов, глубокий разбор сквозной аналитики, Power BI, DAX-модели данных, SQL и бизнес-метрики.
 
+🌐 **Live Demo:** [https://data-analyst-makhset.vercel.app/](https://data-analyst-makhset.vercel.app/)
+
 ---
 
 ## 🎯 О проекте
