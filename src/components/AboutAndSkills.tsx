@@ -1,5 +1,5 @@
 import React from 'react';
-import { Download, BarChart3, Database, Code2, Sparkles, Table, Layers, ArrowRight } from 'lucide-react';
+import { Download, BarChart3, Database, Code2, Sparkles, Table, User, ArrowRight } from 'lucide-react';
 import { RevealOnScroll } from './RevealOnScroll';
 
 export const AboutAndSkills: React.FC = () => {
@@ -30,9 +30,9 @@ export const AboutAndSkills: React.FC = () => {
       description: 'ИИ-агенты (MCP, skills, AGENTS.md), локальные LLM (Qwen, Ollama), OpenClaw, Antigravity, VS Code, Supabase, Vercel.',
     },
     {
-      icon: <Layers className="w-7 h-7 text-zinc-950" strokeWidth={1.9} />,
-      title: 'DWH и качество данных',
-      description: 'Понимание архитектуры Data Warehouse (DWH), витрин данных (Data Marts), Data Quality, транзакционных и аналитических систем OLTP и OLAP.',
+      icon: <User className="w-7 h-7 text-zinc-950" strokeWidth={1.9} />,
+      title: 'Soft skills',
+      description: 'Быстро обучаюсь, легко адаптируюсь, коммуникабелен, открыт к обратной связи. Не боюсь выступлений, есть опыт презентаций перед аудиторией.',
     },
   ];
 
