@@ -13,7 +13,7 @@ export const CandidateHero: React.FC = () => {
             <span>Ищу работу на HeadHunter</span>
           </div>
           <span className="text-xs font-mono text-zinc-400">•</span>
-          <span className="text-xs font-mono text-zinc-600">Навои / Ташкент (готов к переезду) / Удаленно</span>
+          <span className="text-xs font-mono text-zinc-600">Ташкент / Удаленно</span>
         </div>
 
         <div className="text-xs font-mono text-zinc-500 hidden sm:block">

@@ -215,209 +215,6 @@ export const PROJECTS_DATA: ProjectItem[] = [
     ]
   },
 
-  // 4. SQL PROJECT
-  {
-    id: "sql",
-    caseNumber: "04 / 07",
-    title: "DBeaver PostgreSQL Analytics Studio — Live Interactive SQL Workbench",
-    shortTitle: "SQL Studio & DWH",
-    category: "PostgreSQL / CTE / Оконные функции / DBeaver",
-    badge: "SQL Analytics IDE",
-    metrics: [
-      { label: "Скорость запросов", value: "< 14ms" },
-      { label: "Строк в базе данных", value: "1.2M+" },
-      { label: "Сложность логики", value: "Multi-CTE" }
-    ],
-    businessProblem: "Подготовка аналитических витрин из сырой транзакционной реляционной базы данных. Задача требовала написания отказоустойчивых SQL-запросов для расчета когортного удержания, скользящего MRR и кластеризации клиентов без блокировки production БД.",
-    architectureNotes: [
-      "Многоуровневые CTE (Common Table Expressions): структурирование аналитической логики на читаемые блоки (First_Touch, Retention_Matrix).",
-      "Оконные функции (Window Functions): использование SUM() OVER (ORDER BY ROWS BETWEEN), LAG(), DENSE_RANK() и NTILE(4).",
-      "Индексация и оптимизация: создание композитных индексов по (customer_id, payment_date), сокративших время сканирования таблиц в 8 раз."
-    ],
-    takeaway: "Создан набор переиспользуемых представлений (SQL Views) и хранимых процедур, который стал фундаментом для автоматического обновления корпоративных Power BI отчетов по расписанию.",
-    stack: ["PostgreSQL", "DBeaver IDE", "Оконные функции", "Рекурсивные CTE", "EXPLAIN ANALYZE"],
-    screens: [
-      {
-        id: "s1",
-        title: "01. Window Functions (DBeaver)",
-        image: "/Скрины/DBever/Window Function .png",
-        caption: "DBeaver Studio — расчет скользящих агрегатов и ранжирования с помощью оконных функций."
-      },
-      {
-        id: "s2",
-        title: "02. Multi-CTE MoM Analysis",
-        image: "/Скрины/DBever/CTE .png",
-        caption: "SQL Editor — многоуровневые CTE для помесячного расчета когортного удержания подписок."
-      },
-      {
-        id: "s3",
-        title: "03. Loss-Making Diagnostics",
-        image: "/Скрины/DBever/Problematic products.png",
-        caption: "PostgreSQL Query — выявление убыточных товарных позиций с отрицательной юнит-экономикой."
-      },
-      {
-        id: "s4",
-        title: "04. Stored Procedures",
-        image: "/Скрины/DBever/Stored Procedure .png",
-        caption: "DWH Maintenance — хранимая процедура инкрементного обновления аналитической витрины."
-      }
-    ],
-    isSqlProject: true,
-    sqlQueries: [
-      {
-        id: "q1",
-        name: "01. Когортный анализ LTV (CTE + LAG)",
-        time: "12 ms",
-        code: `-- 01. Когортный анализ удержания подписчиков (Retention & LTV)
-WITH monthly_cohorts AS (
-    SELECT 
-        customer_id,
-        DATE_TRUNC('month', MIN(subscription_start_date))::DATE AS cohort_month
-    FROM subscriptions
-    GROUP BY customer_id
-),
-customer_activities AS (
-    SELECT 
-        s.customer_id,
-        mc.cohort_month,
-        DATE_TRUNC('month', s.payment_date)::DATE AS activity_month,
-        (EXTRACT(YEAR FROM s.payment_date) - EXTRACT(YEAR FROM mc.cohort_month)) * 12 +
-        (EXTRACT(MONTH FROM s.payment_date) - EXTRACT(MONTH FROM mc.cohort_month)) AS month_number,
-        s.amount
-    FROM payments s
-    JOIN monthly_cohorts mc ON s.customer_id = mc.customer_id
-)
-SELECT 
-    cohort_month,
-    month_number,
-    COUNT(DISTINCT customer_id) AS active_subscribers,
-    ROUND(SUM(amount), 2) AS cohort_revenue_usd,
-    ROUND(AVG(amount), 2) AS arpu_usd,
-    ROUND(COUNT(DISTINCT customer_id)::NUMERIC / 
-          FIRST_VALUE(COUNT(DISTINCT customer_id)) OVER (PARTITION BY cohort_month ORDER BY month_number) * 100, 2) AS retention_rate_pct
-FROM customer_activities
-GROUP BY cohort_month, month_number
-ORDER BY cohort_month, month_number;`,
-        headers: ["COHORT_MONTH", "MONTH_NUMBER", "ACTIVE_SUBSCRIBERS", "COHORT_REVENUE_USD", "ARPU_USD", "RETENTION_RATE_PCT"],
-        rows: [
-          ["2026-01-01", "0", "1,240", "$148,800.00", "$120.00", "100.00%"],
-          ["2026-01-01", "1", "1,165", "$139,800.00", "$120.00", "93.95%"],
-          ["2026-01-01", "2", "1,098", "$131,760.00", "$120.00", "88.55%"],
-          ["2026-01-01", "3", "1,042", "$125,040.00", "$120.00", "84.03%"],
-          ["2026-01-01", "4", "1,012", "$121,440.00", "$120.00", "81.61%"]
-        ]
-      },
-      {
-        id: "q2",
-        name: "02. Скользящее среднее MRR (ROWS BETWEEN)",
-        time: "9 ms",
-        code: `-- 02. Расчет 3-месячного скользящего среднего выручки и MoM темпа роста
-WITH monthly_sales AS (
-    SELECT 
-        DATE_TRUNC('month', order_date)::DATE AS sales_month,
-        SUM(order_total) AS total_mrr
-    FROM orders
-    WHERE order_status = 'COMPLETED'
-    GROUP BY DATE_TRUNC('month', order_date)
-)
-SELECT 
-    sales_month,
-    total_mrr,
-    LAG(total_mrr, 1) OVER (ORDER BY sales_month) AS prev_month_mrr,
-    ROUND((total_mrr - LAG(total_mrr, 1) OVER (ORDER BY sales_month)) / 
-          LAG(total_mrr, 1) OVER (ORDER BY sales_month) * 100, 2) AS mom_growth_pct,
-    ROUND(AVG(total_mrr) OVER (
-        ORDER BY sales_month 
-        ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
-    ), 2) AS rolling_3m_avg_mrr
-FROM monthly_sales
-ORDER BY sales_month DESC;`,
-        headers: ["SALES_MONTH", "TOTAL_MRR", "PREV_MONTH_MRR", "MOM_GROWTH_PCT", "ROLLING_3M_AVG_MRR"],
-        rows: [
-          ["2026-04-01", "$184,200.00", "$168,900.00", "+9.06%", "$171,433.33"],
-          ["2026-03-01", "$168,900.00", "$161,200.00", "+4.78%", "$161,500.00"],
-          ["2026-02-01", "$161,200.00", "$154,400.00", "+4.40%", "$157,800.00"],
-          ["2026-01-01", "$154,400.00", "$148,000.00", "+4.32%", "$151,200.00"]
-        ]
-      },
-      {
-        id: "q3",
-        name: "03. RFM-кластеризация (NTILE + CASE)",
-        time: "15 ms",
-        code: `-- 03. RFM-сегментация клиентской базы для целевого маркетинга
-WITH rfm_raw AS (
-    SELECT 
-        customer_id,
-        CURRENT_DATE - MAX(order_date)::DATE AS recency_days,
-        COUNT(order_id) AS frequency_orders,
-        SUM(order_total) AS monetary_usd
-    FROM orders
-    WHERE order_status = 'COMPLETED'
-    GROUP BY customer_id
-),
-rfm_scores AS (
-    SELECT 
-        customer_id,
-        recency_days,
-        frequency_orders,
-        monetary_usd,
-        NTILE(5) OVER (ORDER BY recency_days DESC) AS r_score,
-        NTILE(5) OVER (ORDER BY frequency_orders ASC) AS f_score,
-        NTILE(5) OVER (ORDER BY monetary_usd ASC) AS m_score
-    FROM rfm_raw
-)
-SELECT 
-    customer_id,
-    recency_days,
-    frequency_orders,
-    monetary_usd,
-    CONCAT(r_score, f_score, m_score) AS rfm_cell,
-    CASE 
-        WHEN r_score >= 4 AND f_score >= 4 THEN 'VIP Champions'
-        WHEN r_score >= 3 AND f_score >= 3 THEN 'Loyal Customers'
-        WHEN r_score <= 2 AND f_score >= 4 THEN 'At Risk / Churning'
-        ELSE 'Standard / Occasional'
-    END AS customer_segment
-FROM rfm_scores
-LIMIT 10;`,
-        headers: ["CUSTOMER_ID", "RECENCY_DAYS", "FREQUENCY_ORDERS", "MONETARY_USD", "RFM_CELL", "CUSTOMER_SEGMENT"],
-        rows: [
-          ["CUST-8021", "4", "28", "$18,450.00", "555", "VIP Champions"],
-          ["CUST-3914", "11", "24", "$14,920.00", "554", "VIP Champions"],
-          ["CUST-9140", "19", "18", "$9,840.00", "444", "Loyal Customers"],
-          ["CUST-2104", "78", "21", "$12,300.00", "245", "At Risk / Churning"],
-          ["CUST-1049", "140", "2", "$840.00", "111", "Standard / Occasional"]
-        ]
-      },
-      {
-        id: "q4",
-        name: "04. Эффективность сейлзов (RANKX + Window)",
-        time: "10 ms",
-        code: `-- 04. Ранжирование менеджеров по маржинальной прибыли и доле скидки
-SELECT 
-    manager_name,
-    region,
-    COUNT(deal_id) AS deals_won,
-    ROUND(SUM(deal_amount), 2) AS total_revenue,
-    ROUND(AVG(discount_pct), 2) AS avg_discount_pct,
-    ROUND(SUM(deal_margin_amount), 2) AS total_margin_contribution,
-    DENSE_RANK() OVER (ORDER BY SUM(deal_margin_amount) DESC) AS margin_rank,
-    ROUND(SUM(deal_margin_amount) / SUM(SUM(deal_margin_amount)) OVER () * 100, 2) AS pct_of_company_margin
-FROM sales_deals
-WHERE stage = 'CLOSED_WON'
-GROUP BY manager_name, region
-ORDER BY margin_rank ASC;`,
-        headers: ["MANAGER_NAME", "REGION", "DEALS_WON", "TOTAL_REVENUE", "AVG_DISCOUNT_PCT", "TOTAL_MARGIN_CONTRIBUTION", "MARGIN_RANK"],
-        rows: [
-          ["Marcus Johnson", "Midwest", "490", "$9,748,694.00", "4.2%", "$3,899,477.00", "1"],
-          ["James Mitchell", "Mountain West", "501", "$10,390,330.00", "18.5%", "$2,909,292.00", "2"],
-          ["Sarah Chen", "Northeast", "474", "$9,701,675.00", "6.1%", "$3,395,586.00", "3"],
-          ["Amanda Foster", "Southeast", "514", "$4,370,866.00", "5.8%", "$1,748,346.00", "4"]
-        ]
-      }
-    ]
-  },
-
   // 5. HR
   {
     id: "hr",
@@ -593,5 +390,223 @@ ORDER BY margin_rank ASC;`,
         caption: "API Documentation — Swagger / OpenAPI документация REST-эндпоинтов для интеграции с мобильным банком."
       }
     ]
+  },
+
+  // 7. RETAIL SALES SQL
+  {
+    id: "retail-sales-sql",
+    caseNumber: "07 / 08",
+    title: "SQL Data Analysing Project",
+    shortTitle: "SQL Data Analysing Project",
+    category: "PostgreSQL / 3NF / Оконные функции / CTE",
+    badge: "PostgreSQL Analytics",
+    metrics: [
+      { label: "Выручка магазина", value: "$5.44M" },
+      { label: "Объем транзакций", value: "3 000" },
+      { label: "Средний чек", value: "$1,814" }
+    ],
+    businessProblem: "Необходимость структурирования сырых транзакций электронной коммерции в нормализованную реляционную СУБД для регулярного расчёта финансовой отчётности, анализа клиентского оттока и контроля динамики выручки.",
+    architectureNotes: [
+      "Реляционная нормализация (3NF): разделение данных на справочники customers (50 клиентов), products (25 товаров) и таблицу фактов orders (3 000 транзакций) с контролем целостности PK, FK и CHECK (quantity > 0).",
+      "Оконные функции (Window Functions): ранжирование ТОП-2 продуктов внутри каждой категории через DENSE_RANK() OVER (PARTITION BY category).",
+      "Временные ряды и динамика MoM: расчет накопительного итога выручки через SUM() OVER (ORDER BY order_date) и помесячного темпа прироста через LAG()."
+    ],
+    takeaway: "Построена отказоустойчивая реляционная архитектура и написана библиотека из 8 переиспользуемых бизнес-запросов, позволяющая руководству мгновенно оценивать ключевые финансовые KPI и сегментировать клиентов.",
+    stack: ["PostgreSQL 15+", "pgAdmin 4", "Оконные функции", "CTE / WITH", "3NF Normalization"],
+    screens: [
+      {
+        id: "s1",
+        title: "01. Financial KPI Summary",
+        image: "/Скрины/SQL Project/01_financial_kpi.png",
+        caption: "Executive Summary: совокупная выручка ($5.44M), число заказов (3 000) и средний чек."
+      },
+      {
+        id: "s2",
+        title: "02. Category Revenue (HAVING)",
+        image: "/Скрины/SQL Project/02_category_analysis.png",
+        caption: "Category Breakdown: фильтрация категорий с выручкой свыше $50,000 через GROUP BY + HAVING."
+      },
+      {
+        id: "s3",
+        title: "03. Regional Performance",
+        image: "/Скрины/SQL Project/03_regional_sales.png",
+        caption: "Regional Breakdown: многотабличный JOIN трёх сущностей и расчёт среднего чека по регионам."
+      },
+      {
+        id: "s4",
+        title: "04. Inactive Customer Retention",
+        image: "/Скрины/SQL Project/04_inactive_customers.png",
+        caption: "Churn Diagnostics: поиск клиентов без активности за период через LEFT JOIN ... WHERE IS NULL."
+      },
+      {
+        id: "s5",
+        title: "05. VIP Customers (CTE)",
+        image: "/Скрины/SQL Project/05_top5_vip_customers.png",
+        caption: "Top-5 VIP Customers: расчёт ядра клиентской базы через многоуровневый CTE."
+      },
+      {
+        id: "s6",
+        title: "06. Top-2 Products per Category",
+        image: "/Скрины/SQL Project/06_top2_products_per_category.png",
+        caption: "Window Functions: ранжирование бестселлеров в каждой категории через DENSE_RANK()."
+      },
+      {
+        id: "s7",
+        title: "07. Running Total Revenue",
+        image: "/Скрины/SQL Project/07_cumulative_monthly_revenue.png",
+        caption: "Running Total: кумулятивный нарастающий итог выручки компании через SUM() OVER."
+      },
+      {
+        id: "s8",
+        title: "08. MoM Growth Rate (LAG)",
+        image: "/Скрины/SQL Project/08_monthly_revenue_growth_lag.png",
+        caption: "MoM Growth Analysis: темпы роста выручки месяц к месяцу с помощью оконной функции LAG()."
+      }
+    ],
+    isSqlProject: true,
+    sqlQueries: [
+      {
+        id: "q1",
+        name: "01. Основные финансовые KPI (Executive Summary)",
+        time: "11 ms",
+        code: `SELECT 
+    SUM(o.quantity * p.unit_price) AS total_sales,
+    COUNT(order_id) AS total_orders,
+    COUNT(DISTINCT customer_id) AS total_customers,
+    SUM(quantity) AS total_items_sold,
+    ROUND(AVG(o.quantity * p.unit_price), 2) AS avg_sales
+FROM orders o
+JOIN products p ON o.product_id = p.product_id;`,
+        headers: ["TOTAL_SALES", "TOTAL_ORDERS", "TOTAL_CUSTOMERS", "TOTAL_ITEMS_SOLD", "AVG_SALES"],
+        rows: [
+          ["$5,441,842.10", "3,000", "50", "76,641", "$1,813.95"]
+        ]
+      },
+      {
+        id: "q2",
+        name: "02. ТОП-2 товара в категории (DENSE_RANK)",
+        time: "14 ms",
+        code: `WITH product_sales AS (
+    SELECT 
+        p.category,
+        p.product_name,
+        SUM(o.quantity * p.unit_price) AS total_sales,
+        DENSE_RANK() OVER (
+            PARTITION BY p.category 
+            ORDER BY SUM(o.quantity * p.unit_price) DESC
+        ) AS rank_in_category
+    FROM orders o
+    JOIN products p ON o.product_id = p.product_id
+    GROUP BY p.category, p.product_name
+)
+SELECT category, rank_in_category, product_name, total_sales
+FROM product_sales
+WHERE rank_in_category <= 2
+ORDER BY category, rank_in_category;`,
+        headers: ["CATEGORY", "RANK_IN_CATEGORY", "PRODUCT_NAME", "TOTAL_SALES"],
+        rows: [
+          ["Clothing", "1", "Leather Jacket", "$364,280.00"],
+          ["Clothing", "2", "Winter Coat", "$312,150.00"],
+          ["Electronics", "1", "Laptop Pro 16", "$948,200.00"],
+          ["Electronics", "2", "Smartphone Ultra", "$762,400.00"]
+        ]
+      },
+      {
+        id: "q3",
+        name: "03. Нарастающий итог выручки (SUM OVER)",
+        time: "12 ms",
+        code: `WITH monthly_sales AS (
+    SELECT 
+        DATE_TRUNC('month', o.order_date)::date AS order_month,
+        SUM(o.quantity * p.unit_price) AS total_sales
+    FROM orders o
+    JOIN products p ON o.product_id = p.product_id
+    GROUP BY DATE_TRUNC('month', o.order_date)
+)
+SELECT 
+    order_month,
+    total_sales,
+    SUM(total_sales) OVER (ORDER BY order_month) AS running_total_sales
+FROM monthly_sales
+ORDER BY order_month;`,
+        headers: ["ORDER_MONTH", "TOTAL_SALES", "RUNNING_TOTAL_SALES"],
+        rows: [
+          ["2023-01-01", "$214,500.00", "$214,500.00"],
+          ["2023-02-01", "$228,400.00", "$442,900.00"],
+          ["2023-03-01", "$241,100.00", "$684,000.00"]
+        ]
+      },
+      {
+        id: "q4",
+        name: "04. Динамика MoM прироста (LAG)",
+        time: "15 ms",
+        code: `WITH monthly_summary AS (
+    SELECT 
+        DATE_TRUNC('month', o.order_date)::date AS order_month,
+        SUM(o.quantity * p.unit_price) AS current_revenue
+    FROM orders o
+    JOIN products p ON o.product_id = p.product_id
+    GROUP BY DATE_TRUNC('month', o.order_date)
+),
+monthly_with_lag AS (
+    SELECT 
+        order_month,
+        current_revenue,
+        LAG(current_revenue) OVER (ORDER BY order_month) AS prev_revenue
+    FROM monthly_summary
+)
+SELECT 
+    order_month,
+    current_revenue,
+    prev_revenue,
+    current_revenue - prev_revenue AS difference_revenue,
+    ROUND((current_revenue - prev_revenue) / prev_revenue * 100) AS growth_pct
+FROM monthly_with_lag
+ORDER BY order_month;`,
+        headers: ["ORDER_MONTH", "CURRENT_REVENUE", "PREV_REVENUE", "DIFFERENCE_REVENUE", "GROWTH_PCT"],
+        rows: [
+          ["2023-02-01", "$228,400.00", "$214,500.00", "+$13,900.00", "+6.48%"],
+          ["2023-03-01", "$241,100.00", "$228,400.00", "+$12,700.00", "+5.56%"]
+        ]
+      }
+    ]
+  },
+
+  // 8. RETAIL SALES PYTHON
+  {
+    id: "retail-sales-python",
+    caseNumber: "08 / 08",
+    title: "Python Data Cleaning Project",
+    shortTitle: "Python Data Cleaning Project",
+    category: "Python / Pandas / Data Quality / ETL",
+    badge: "Python ETL Engine",
+    metrics: [
+      { label: "Сырых строк обработано", value: "5 000" },
+      { label: "Валидный датасет", value: "4 892" },
+      { label: "Пропусков после ETL", value: "0" }
+    ],
+    businessProblem: "Сырые выгрузки транзакционных систем (1С/CRM) содержали дублирующиеся чеки, разнородные форматы дат, текстовые опечатки и критические аномалии (отрицательные цены и объемы), искажающие бизнес-отчетность.",
+    architectureNotes: [
+      "Модульный ETL-пайплайн: линейный процесс очистки от загрузки dirty_sales.csv до валидированного clean_sales.csv.",
+      "Унификация форматов: нормализация mixed-форматов дат в единый datetime64[ns] и текстовых полей к Title Case.",
+      "Data Quality контроль: устранение 18 дубликатов, отсев строк без цен и замена пропусков в регионах на 'Unknown'."
+    ],
+    takeaway: "Разработан скрипт очистки данных, исключающий искажение аналитических отчётов и подготавливающий 100% чистый датасет для загрузки в реляционную СУБД PostgreSQL.",
+    stack: ["Python 3.11", "Pandas 2.0+", "NumPy", "EDA", "Data Quality"],
+    screens: [
+      {
+        id: "s1",
+        title: "01. Код очистки данных (Часть 1)",
+        image: "/Скрины/Python Data Cleaning/1. Первый снимок.png",
+        caption: "Python Pipeline: первичный осмотр данных, стандартизация колонок и парсинг дат."
+      },
+      {
+        id: "s2",
+        title: "02. Код очистки данных (Часть 2)",
+        image: "/Скрины/Python Data Cleaning/2. Второй снимок.png",
+        caption: "Python Pipeline: удаление дубликатов, фильтрация аномалий и сохранение clean_sales.csv."
+      }
+    ]
   }
+
 ];

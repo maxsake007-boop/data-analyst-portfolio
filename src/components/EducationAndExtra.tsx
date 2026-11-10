@@ -78,7 +78,7 @@ export const EducationAndExtra: React.FC = () => {
                   <MapPin className="w-6 h-6" strokeWidth={1.8} />
                 </div>
                 <span className="text-sm sm:text-[15px] text-zinc-800 font-medium leading-snug group-hover:text-zinc-950 transition-colors">
-                  Базируюсь в Навои, готов к переезду в Ташкент при подходящем предложении
+                  Базируюсь в Ташкенте, готов к работе в офисе или удалённо
                 </span>
               </div>
             </RevealOnScroll>

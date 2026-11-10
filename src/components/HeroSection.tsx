@@ -125,7 +125,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isReady = true, onUnco
           >
             <div className="inline-flex items-center gap-2.5">
               <MapPin className="w-5 h-5 text-zinc-900 shrink-0" />
-              <span>Ташкент / Удалённо (готов к переезду)</span>
+              <span>Ташкент / Удалённо</span>
             </div>
 
             <a

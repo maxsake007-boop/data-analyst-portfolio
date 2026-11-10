@@ -149,7 +149,7 @@ export const ContactSection: React.FC = () => {
 
           <div className="flex items-center gap-1.5 px-3 py-1.5 text-zinc-500">
             <MapPin className="w-3.5 h-3.5" />
-            <span>Навои / Ташкент (готов к переезду) / Удаленно</span>
+            <span>Ташкент / Удаленно</span>
           </div>
         </div>
 
