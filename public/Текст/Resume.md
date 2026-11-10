@@ -1,60 +1,56 @@
 # Махсет Нарбеков
 
-**Начинающий Data Analyst | Power BI**
+**Аналитик данных / BI-аналитик (Junior), специализация Power BI**
 
-📍 Ташкент, Узбекистан 📧 maxset.narbekov@gmail.com 📱 +998 90 123 45 67 🔗 GitHub: github.com/maxsake007-boop
+📍 Ташкент, Узбекистан • 📧 maxnarbekov39@gmail.com • 📱 +998 90 123 45 67 • 💬 Telegram: [@spacenmn](https://t.me/spacenmn) • 🔗 GitHub: [maxsake007-boop](https://github.com/maxsake007-boop) • 🌐 Портфолио: [data-analyst-makhset.vercel.app](https://data-analyst-makhset.vercel.app/)
 
 ---
 
 ## О себе
 
-Начинающий Data Analyst, прошёл профильное обучение по Data Science в PROWEB (диплом с отличием) в январе 2026 года. После выпуска собрал портфолио первых практических проектов, параллельно пробовал развивать фриланс-практику на Upwork и продолжал наращивать опыт работы в Power BI. Не останавливаюсь на поверхностном уровне, разбираюсь, как данные превращаются в решения, а не просто в красивые графики. Основной фокус: Power BI, где на практике применяю широкий набор инструментов, от условного форматирования и bookmarks до decomposition tree и продвинутых DAX-мер. Активно использую ИИ-инструменты в работе, это часть современного подхода к аналитике.
+Аналитик данных / BI-аналитик (Junior), специализация Power BI. Выпускник программы Data Science PROWEB, диплом с отличием, январь 2026. Строю отчёты в Power BI: от подключения источников и модели данных (звёздная схема) до мер DAX и дашбордов с дизайном в Figma. В портфолио 5 дашбордов по продажам, финансам, HR, e-commerce и SaaS.
 
 ---
 
-## Навыки
+## Проекты Power BI (портфолио: данные синтетические, источники подключены через реальные коннекторы)
 
-**BI и визуализация:** Power BI (DAX-меры, Power Query, моделирование данных, RLS, drill-through, bookmarks, decomposition tree, field parameters, forecast/anomaly detection, What-If параметры, кастомный дизайн в Figma), Looker Studio
-
-**Данные и базы:** SQL (SELECT, JOIN, GROUP BY, фильтрация, сортировка, знаком с оконными функциями), опыт создания базы данных в PostgreSQL как дополнительного источника данных для дашборда
-
-**Data Science (базовый уровень, при необходимости готов быстро освежить):** Python (pandas, scikit-learn), FastAPI
-
-**ИИ-инструменты:** активно использую в рабочих процессах
-
-**Английский язык:** IELTS 5.5 (Speaking 6, Writing 6, Listening 5, Reading 5)
-
-**Soft skills:** внимательность к деталям, самостоятельность и обучаемость, ответственность
+- **NovaBridge Solutions, продажи B2B:** Salesforce, Google Sheets, Azure SQL. Звёздная схема из 2 таблиц фактов и 6 измерений (около 55 тыс. строк). Дашборд показывает главную точку потерь воронки: переход от Proposal к Negotiation. Настроил роли доступа (Row-Level Security) по регионам.
+- **Kestrel Software, SaaS-аналитика:** BigQuery, PostgreSQL. ARR, MRR, NRR, churn и оценки риска оттока из ML-модели.
+- **CrestForge Industrial, финансы:** Azure SQL, Excel, Google Sheets. P&L, бюджет против факта, cash flow.
+- **Harlow Home Co., e-commerce:** CSV, Google Sheets, Pipedrive (через API). Маржа, LTV, доля возвратов по категориям; дашборд показывает убыточную категорию Lighting.
+- **Veridian Consulting Group, HR:** HubSpot, Excel. Текучесть и найм; дашборд показывает, что почти треть увольнений приходится на сотрудников со стажем до 6 месяцев.
 
 ---
 
-## Проекты
+## Проекты по работе с данными: SQL и Python
 
-**Портфолио дашбордов Power BI (5 отраслей)** Finance/Accounting, Sales, HR, E-commerce, SaaS Analytics. Полный цикл от сырых данных до интерактивного дашборда: DAX-меры, звёздная схема, таблицы дат, условное форматирование, многостраничная навигация.
+- **SQL Data Analysing Project (PostgreSQL):**
+  Проектирование нормализованной реляционной базы данных (3NF: `customers`, `products`, `orders`) и разработка 8 бизнес-запросов для анализа розничных продаж. Использовал сложные JOIN, агрегации с HAVING, CTE (Common Table Expressions) для изолированных аналитических выборок и оконные функции: `DENSE_RANK` для ранжирования топ-товаров внутри категорий, `SUM OVER` для нарастающего итога выручки, `LAG` для расчёта помесячного прироста выручки MoM.
+  * Репозиторий: [github.com/maxsake007-boop/SQL-Projects](https://github.com/maxsake007-boop/SQL-Projects)
 
-**YesCredit, скоринг кредитоспособности** FastAPI-приложение для оценки кредитного риска. Дипломный проект PROWEB, защищён с отличием.
-
-**Анализ данных Netflix (дипломный проект)** Дашборд с аналитикой каталога и контента Netflix. Первый Power BI дашборд, защищён с отличием.
-
-**GA4 дашборд для Google Merch Shop** Аналитика электронной коммерции в Looker Studio.
-
-**Самостоятельные дашборды (после PROWEB)** Superstore Sales, Ad Campaign Analytics, Coffee Shop. Первые дашборды, сделанные самостоятельно после окончания курса, для формирования портфолио.
+- **Python Data Cleaning Project (Pandas & ETL):**
+  Разработка модульного ETL-пайплайна для сквозной очистки и валидации сырых транзакционных данных (из `dirty_sales.csv` в чистый `clean_sales.csv`). Нормализация смешанных форматов дат, устранение неявных дубликатов, обработка пропусков и выбросов, фильтрация аномалий (отрицательные цены и объёмы). Подготовка 100% валидированного датасета без искажений для загрузки в СУБД PostgreSQL.
+  * Репозиторий: [github.com/maxsake007-boop/Python-data-cleaning-project](https://github.com/maxsake007-boop/Python-data-cleaning-project)
 
 ---
 
-## Образование
+## Работа с данными: SQL, Python и Excel
 
-**Data Science, PROWEB.** Диплом с отличием. Защитил обе дипломные работы: YesCredit (скоринг кредитоспособности, FastAPI) и дашборд по анализу данных Netflix. После завершения курса самостоятельно собрал ещё несколько практических дашбордов для портфолио (Superstore, рекламная аналитика, кофейня).
+- **SQL (PostgreSQL):** JOIN, подзапросы, CTE, оконные функции.
+- **Python:** pandas, NumPy, очистка и трансформация данных, понимаю ETL и ELT.
+- **Excel:** на базовом уровне для работы (сводные таблицы, базовые формулы, фильтрация).
+
+---
+
+## Навыки работы с ИИ
+
+В работе и личных проектах: ИИ-агенты (MCP, skills, AGENTS.md), локальные LLM (Qwen 3.5, Ollama), OpenClaw, Antigravity, VS Code, Supabase, Vercel.
 
 ---
 
 ## Дополнительно
 
-- Веду фриланс-практику на Upwork с фокусом на международных клиентов (US/EU)
-- Базируюсь в Ташкенте, готов к работе в офисе или удалённо
-
----
-
-## Ключевые слова
-
-Data Analyst, Power BI, DAX, Power Query, SQL, JOIN, GROUP BY, оконные функции, Excel, сводные таблицы, Python, pandas, дашборды, визуализация данных, отчётность, KPI, аналитическое мышление, внимательность к деталям, самостоятельность, обучаемость, ответственность
+- Понимаю, что такое Data Warehouse (DWH, хранилища данных), Data Mart (витрины данных), Data Quality, OLTP и OLAP.
+- Базируюсь в Ташкенте, готов к удалённой работе, работе в офисе и к обучению.
+- Подробные описания и скриншоты проектов: [https://data-analyst-makhset.vercel.app/](https://data-analyst-makhset.vercel.app/)
+- Telegram: [@spacenmn](https://t.me/spacenmn)

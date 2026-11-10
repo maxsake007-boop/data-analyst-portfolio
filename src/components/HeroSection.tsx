@@ -105,9 +105,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isReady = true, onUnco
             variants={itemVariants}
             className="text-2xl sm:text-3xl lg:text-[32px] xl:text-[36px] font-extrabold text-zinc-900 tracking-tight mb-6 flex flex-wrap items-center gap-3"
           >
-            <span>Начинающий Data Analyst</span>
+            <span>Data Analyst / BI-аналитик</span>
             <span className="text-zinc-300 font-light">|</span>
-            <span>Power BI</span>
+            <span>Power BI • SQL • Python</span>
           </motion.div>
 
           {/* Short Bio Description (Enlarged + entrance) */}
@@ -115,7 +115,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isReady = true, onUnco
             variants={itemVariants}
             className="text-lg sm:text-xl lg:text-[23px] text-zinc-600 font-normal leading-relaxed max-w-xl mb-10"
           >
-            Power BI-аналитик с портфолио корпоративных отчётов: звёздные схемы, DAX, RLS, What-If параметры, SQL и API. Работаю с данными от ETL и очистки до финального дашборда.
+            Практический анализ данных и BI: продвинутый SQL (PostgreSQL, CTE, оконные функции), очистка и подготовка данных на Python (Pandas), базовый Excel и интерактивные корпоративные дашборды в Power BI (звёздные схемы, DAX, RLS, дизайн в Figma).
           </motion.p>
 
           {/* Meta Contact Details Row (Icons + Info, Enlarged + entrance) */}

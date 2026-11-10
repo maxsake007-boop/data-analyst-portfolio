@@ -1,38 +1,38 @@
 import React from 'react';
-import { Download, BarChart3, Database, Code2, Sparkles, Globe, User, ArrowRight } from 'lucide-react';
+import { Download, BarChart3, Database, Code2, Sparkles, Table, Layers, ArrowRight } from 'lucide-react';
 import { RevealOnScroll } from './RevealOnScroll';
 
 export const AboutAndSkills: React.FC = () => {
   const skills = [
     {
-      icon: <BarChart3 className="w-7 h-7 text-zinc-950" strokeWidth={1.9} />,
-      title: 'BI и визуализация',
-      description: 'Power BI (DAX, Power Query, RLS, drill-through, bookmarks, decomposition tree, field parameters, forecast, anomaly detection, What-If), Looker Studio',
-    },
-    {
       icon: <Database className="w-7 h-7 text-zinc-950" strokeWidth={1.9} />,
-      title: 'Данные и базы',
-      description: 'SQL (SELECT, JOIN, GROUP BY, оконные функции), PostgreSQL',
+      title: 'SQL (PostgreSQL)',
+      description: 'JOIN, подзапросы, группировки с HAVING, CTE (Common Table Expressions) и оконные функции (ROW_NUMBER, DENSE_RANK, LAG, SUM OVER). Проектирование 3NF-схем.',
     },
     {
       icon: <Code2 className="w-7 h-7 text-zinc-950" strokeWidth={1.9} />,
-      title: 'Data Science (базовый уровень)',
-      description: 'Python (pandas, NumPy, Matplotlib, Seaborn, Plotly, scikit-learn), FastAPI, Jupyter Notebook',
+      title: 'Python (Pandas)',
+      description: 'Сквозная очистка и трансформация данных (Pandas, NumPy): парсинг дат, удаление дубликатов, обработка пропусков и выбросов. Понимание ETL и ELT.',
+    },
+    {
+      icon: <BarChart3 className="w-7 h-7 text-zinc-950" strokeWidth={1.9} />,
+      title: 'Power BI (Специализация)',
+      description: 'Звёздная схема, сложные DAX-меры, Power Query, RLS (разграничение прав), What-If параметры, кастомный дизайн отчётов в Figma. 5 отраслевых дашбордов.',
+    },
+    {
+      icon: <Table className="w-7 h-7 text-zinc-950" strokeWidth={1.9} />,
+      title: 'Таблицы и Excel',
+      description: 'Excel на базовом уровне для работы (сводные таблицы, базовые формулы, фильтрация и подготовка выгрузок для аналитики), Google Sheets.',
     },
     {
       icon: <Sparkles className="w-7 h-7 text-zinc-950" strokeWidth={1.9} />,
       title: 'ИИ-инструменты',
-      description: 'Активно использую в рабочих процессах (создаю собственного ИИ-ассистента со знаниями в сфере Data Analytics для помощи в работе)',
+      description: 'ИИ-агенты (MCP, skills, AGENTS.md), локальные LLM (Qwen, Ollama), OpenClaw, Antigravity, VS Code, Supabase, Vercel.',
     },
     {
-      icon: <Globe className="w-7 h-7 text-zinc-950" strokeWidth={1.9} />,
-      title: 'Английский язык',
-      description: 'IELTS 5.5 (Speaking 6, Writing 6, Listening 5, Reading 5)',
-    },
-    {
-      icon: <User className="w-7 h-7 text-zinc-950" strokeWidth={1.9} />,
-      title: 'Soft skills',
-      description: 'Быстро обучаюсь, легко адаптируюсь, коммуникабелен, открыт к обратной связи. Не боюсь выступлений, есть опыт презентаций перед аудиторией.',
+      icon: <Layers className="w-7 h-7 text-zinc-950" strokeWidth={1.9} />,
+      title: 'DWH и качество данных',
+      description: 'Понимание архитектуры Data Warehouse (DWH), витрин данных (Data Marts), Data Quality, транзакционных и аналитических систем OLTP и OLAP.',
     },
   ];
 
@@ -55,10 +55,10 @@ export const AboutAndSkills: React.FC = () => {
             <RevealOnScroll direction="up" delay={140}>
               <div className="space-y-6 text-base sm:text-lg lg:text-[19px] text-zinc-800 leading-[1.75] font-normal">
                 <p>
-                  Начинающий Data Analyst, прошёл профильное обучение по Data Science в PROWEB (диплом с отличием) в январе 2026 года. После выпуска собрал портфолио первых практических проектов, параллельно пробовал развивать фриланс-практику на Upwork и продолжал наращивать опыт работы в Power BI.
+                  Data Analyst / BI-аналитик (Junior), специализация Power BI. Выпускник программы PROWEB (диплом с отличием, январь 2026 года). Строю отчёты от подключения источников и модели данных (звёздная схема) до мер DAX и дашбордов с дизайном в Figma. В портфолио 5 дашбордов по продажам, финансам, HR, e-commerce и SaaS.
                 </p>
                 <p>
-                  Осваивал возможности Power BI, SQL и Python не в теории, а через реальные проекты: подключал источники, преобразовывал и чистил данные, работал в pgAdmin 4, DBeaver и Jupyter Notebook. SQL и Python (pandas, NumPy) — на базовом уровне: понимаю принципы, знаю инструменты и быстро адаптируюсь под задачи команды. Активно использую ИИ-инструменты в работе, это часть современного подхода к аналитике.
+                  Владею практическим стеком для задач бизнеса: продвинутый SQL в PostgreSQL (CTE, оконные функции), очистка и трансформация данных на Python (Pandas, понимание ETL/ELT), базовый Excel для работы, а также концепции DWH, витрин данных и Data Quality. Активно применяю современные ИИ-инструменты и агентов в аналитических процессах.
                 </p>
               </div>
             </RevealOnScroll>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { GraduationCap, Briefcase, MapPin } from 'lucide-react';
+import { GraduationCap, Database, MapPin } from 'lucide-react';
 import { RevealOnScroll } from './RevealOnScroll';
 
 export const EducationAndExtra: React.FC = () => {
@@ -28,10 +28,10 @@ export const EducationAndExtra: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="font-extrabold text-lg sm:text-xl text-zinc-950 leading-snug group-hover:text-zinc-800 transition-colors">
-                    Data Science, PROWEB
+                    PROWEB
                   </h3>
                   <span className="text-xs sm:text-sm text-zinc-500 font-semibold block mt-1">
-                    Диплом с отличием
+                    Диплом с отличием • Январь 2026
                   </span>
                 </div>
               </div>
@@ -41,7 +41,7 @@ export const EducationAndExtra: React.FC = () => {
 
               {/* Right: Narrative Description */}
               <p className="text-xs sm:text-sm lg:text-[14.5px] text-zinc-700 leading-relaxed font-normal flex-1">
-                Защитил обе дипломные работы: YesCredit (скоринг кредитоспособности, FastAPI) и дашборд по анализу данных Netflix. После завершения курса разработал серию комплексных отраслевых дашбордов для бизнеса: SaaS Analytics, Finance & Accounting и E-commerce & Retail.
+                Защитил обе дипломные работы: YesCredit (скоринг кредитоспособности, FastAPI) и дашборд по анализу данных Netflix. После завершения курса разработал серию практических проектов: 5 бизнес-дашбордов в Power BI, реляционную модель базы данных в PostgreSQL с 8 аналитическими запросами и модульный ETL-пайплайн очистки данных на Python.
               </p>
             </div>
           </RevealOnScroll>
@@ -64,10 +64,10 @@ export const EducationAndExtra: React.FC = () => {
             <RevealOnScroll direction="up" delay={140} duration={700}>
               <div className="group bg-white rounded-2xl sm:rounded-full border border-zinc-200/90 p-2.5 sm:p-3 pr-7 flex items-center gap-4 hover:border-zinc-400 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 min-h-[72px]">
                 <div className="w-13 h-13 rounded-xl sm:rounded-full bg-zinc-100 flex items-center justify-center text-zinc-950 shrink-0 shadow-2xs group-hover:scale-105 transition-transform duration-300">
-                  <Briefcase className="w-6 h-6" strokeWidth={1.8} />
+                  <Database className="w-6 h-6" strokeWidth={1.8} />
                 </div>
                 <span className="text-sm sm:text-[15px] text-zinc-800 font-medium leading-snug group-hover:text-zinc-950 transition-colors">
-                  Веду фриланс-практику на Upwork с фокусом на международных клиентов (US/EU)
+                  Понимаю архитектуру DWH (хранилища данных), витрины Data Mart, Data Quality, OLTP и OLAP
                 </span>
               </div>
             </RevealOnScroll>
@@ -78,7 +78,7 @@ export const EducationAndExtra: React.FC = () => {
                   <MapPin className="w-6 h-6" strokeWidth={1.8} />
                 </div>
                 <span className="text-sm sm:text-[15px] text-zinc-800 font-medium leading-snug group-hover:text-zinc-950 transition-colors">
-                  Базируюсь в Ташкенте, готов к работе в офисе или удалённо
+                  Базируюсь в Ташкенте, готов к удалённой работе, в офисе и быстрому обучению
                 </span>
               </div>
             </RevealOnScroll>

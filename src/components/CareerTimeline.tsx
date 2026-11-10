@@ -14,7 +14,7 @@ export const CareerTimeline: React.FC = () => {
           Образование и практический трек
         </h2>
         <p className="text-sm sm:text-base text-zinc-600 mt-2">
-          Академическая база по Data Science и реальный опыт разработки сквозных аналитических систем.
+          Профильная подготовка по аналитике данных и реальный опыт разработки сквозных аналитических систем.
         </p>
       </div>
 
@@ -42,7 +42,7 @@ export const CareerTimeline: React.FC = () => {
             </div>
 
             <h4 className="font-display font-bold text-lg text-zinc-950 mb-1">
-              PROWEB — Направление Data Science
+              PROWEB — Направление аналитики данных
             </h4>
             <p className="text-xs sm:text-sm text-zinc-600 mb-4 leading-relaxed">
               Комплексная программа по анализу данных, проектированию реляционных баз данных, машинному обучению и бизнес-визуализации.
@@ -126,7 +126,7 @@ export const CareerTimeline: React.FC = () => {
                 ФРИЛАНС-ПРАКТИКА
               </span>
               <span className="text-xs font-mono text-zinc-500">
-                Upwork / Прямые клиенты
+                Практика и пет-проекты
               </span>
             </div>
 

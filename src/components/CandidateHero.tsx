@@ -17,7 +17,7 @@ export const CandidateHero: React.FC = () => {
         </div>
 
         <div className="text-xs font-mono text-zinc-500 hidden sm:block">
-          PROWEB (DATA SCIENCE) С ОТЛИЧИЕМ
+          PROWEB (ДИПЛОМ С ОТЛИЧИЕМ)
         </div>
       </div>
 
@@ -38,7 +38,7 @@ export const CandidateHero: React.FC = () => {
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
                 <span className="text-zinc-200">Open to Work</span>
               </span>
-              <span className="text-zinc-400">Power BI / SQL</span>
+              <span className="text-zinc-400">SQL / Python / Power BI</span>
             </div>
           </div>
         </div>
@@ -55,13 +55,12 @@ export const CandidateHero: React.FC = () => {
           </h1>
 
           <div className="text-base sm:text-xl font-semibold text-zinc-800 mb-4 flex items-center gap-2">
-            <span>Начинающий Data Analyst | Power BI</span>
+            <span>Data Analyst / BI-аналитик (Junior)</span>
           </div>
 
           {/* Authentic, concise "About Me" directly from Resume.md */}
           <p className="text-sm sm:text-base text-zinc-700 leading-relaxed max-w-2xl mb-6 font-normal">
-            Прошёл профильное обучение по Data Science в PROWEB (диплом с отличием) в январе 2026 года. Не останавливаюсь на поверхностном уровне — разбираюсь, как данные превращаются в понятные решения для бизнеса, а не просто в красивые графики. 
-            Основной фокус: <strong>Power BI</strong> (продвинутый DAX, звёздные схемы, RLS) и <strong>SQL</strong> (PostgreSQL, оконные функции, CTE).
+            Выпускник программы PROWEB (диплом с отличием, январь 2026). Строю отчёты в Power BI (звёздные схемы, продвинутый DAX, RLS, дизайн в Figma), владею продвинутым SQL (PostgreSQL, CTE, оконные функции), очисткой данных на Python (Pandas) и базовым Excel для работы.
           </p>
 
           {/* Quick Action Buttons */}
