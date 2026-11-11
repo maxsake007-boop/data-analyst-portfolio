@@ -29,7 +29,7 @@ export const CandidateHero: React.FC = () => {
           <div className="relative w-64 sm:w-72 md:w-full max-w-[320px] aspect-square rounded-3xl overflow-hidden glass-card border border-white shadow-xl ring-1 ring-zinc-200/70 group">
             <img
               src="/makhset_avatar.jpg"
-              alt="Махсет Нарбеков — Data Analyst"
+              alt="Махсет Нарбеков - Data Analyst"
               className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-103"
             />
             {/* Status chip over photo */}

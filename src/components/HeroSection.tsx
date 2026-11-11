@@ -241,7 +241,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isReady = true, onUnco
           >
             <img
               src="/makhset_cutout.png"
-              alt="Махсет Нарбеков — Data Analyst"
+              alt="Махсет Нарбеков - Data Analyst"
               draggable={false}
               onDragStart={(e) => e.preventDefault()}
               className="w-full h-auto max-h-[700px] sm:max-h-[760px] lg:max-h-[820px] xl:max-h-[880px] object-contain object-bottom drop-shadow-[0_25px_50px_rgba(0,0,0,0.06)] select-none pointer-events-auto"
