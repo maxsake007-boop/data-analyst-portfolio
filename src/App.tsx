@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Info } from 'lucide-react';
 import { InteractiveBackground } from './components/InteractiveBackground';
 import { SiteHeader } from './components/SiteHeader';
 import { HeroSection } from './components/HeroSection';
 import { AboutAndSkills } from './components/AboutAndSkills';
-import { ProjectsGrid, ProjectCardData } from './components/ProjectsGrid';
+import { ProjectsGrid } from './components/ProjectsGrid';
 import { EducationAndExtra } from './components/EducationAndExtra';
 import { ContactBanner } from './components/ContactBanner';
 import { SiteFooter } from './components/SiteFooter';
 import { ProjectModal } from './components/ProjectModal';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
+import { TRANSLATIONS } from './data/translations';
+import { getLocalizedProjects } from './data/bilingualProjects';
 
-export const App: React.FC = () => {
-  const [selectedProject, setSelectedProject] = useState<ProjectCardData | null>(null);
+const AppContent: React.FC = () => {
+  const { lang } = useLanguage();
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [isIntroReady, setIsIntroReady] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -36,8 +40,14 @@ export const App: React.FC = () => {
   }, [toastMessage]);
 
   const handleUnconfirmedLink = () => {
-    showToast('Извините, пока что ссылка не подтверждена');
+    showToast(TRANSLATIONS.toasts.unconfirmedLink[lang]);
   };
+
+  const currentProjects = useMemo(() => getLocalizedProjects(lang), [lang]);
+  const selectedProject = useMemo(() => {
+    if (!selectedProjectId) return null;
+    return currentProjects.find((p) => p.id === selectedProjectId) || null;
+  }, [currentProjects, selectedProjectId]);
 
   return (
     <div className="relative min-h-screen bg-[#fcfcfd] text-zinc-900 font-sans selection:bg-zinc-200 selection:text-zinc-950 overflow-x-hidden">
@@ -56,19 +66,19 @@ export const App: React.FC = () => {
           onUnconfirmedLink={handleUnconfirmedLink}
         />
 
-        {/* 01 Обо мне & 02 Навыки (Side-by-side) */}
+        {/* 01 About Me & 02 Skills (Side-by-side) */}
         <AboutAndSkills />
 
-        {/* 03 Проекты (3x2 Grid + Filters) */}
+        {/* 03 Projects (Grid + Filters) */}
         <ProjectsGrid
-          onOpenProject={(proj) => setSelectedProject(proj)}
+          onOpenProject={(proj) => setSelectedProjectId(proj.id)}
           onUnconfirmedLink={handleUnconfirmedLink}
         />
 
-        {/* 04 Образование & 05 Дополнительно */}
+        {/* 04 Education & 05 Additional Info */}
         <EducationAndExtra />
 
-        {/* Давайте свяжемся CTA Banner */}
+        {/* Let's Connect CTA Banner */}
         <ContactBanner onUnconfirmedLink={handleUnconfirmedLink} />
       </main>
 
@@ -78,7 +88,7 @@ export const App: React.FC = () => {
       {/* 5. Project Detail / Screenshots Modal */}
       <ProjectModal
         project={selectedProject}
-        onClose={() => setSelectedProject(null)}
+        onClose={() => setSelectedProjectId(null)}
       />
 
       {/* 6. Sleek Floating Toast Notification */}
@@ -90,6 +100,14 @@ export const App: React.FC = () => {
       )}
 
     </div>
+  );
+};
+
+export const App: React.FC = () => {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 };
 

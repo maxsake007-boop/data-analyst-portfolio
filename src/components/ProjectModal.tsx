@@ -3,6 +3,8 @@ import { X, ExternalLink, Github, Monitor, Maximize2, Sparkles, Database, Slider
 import { ProjectCardData } from './ProjectsGrid';
 import ThumbnailCarousel, { CarouselItem } from './ui/thumbnail-carousel';
 import { LightboxModal } from './LightboxModal';
+import { useLanguage } from '../context/LanguageContext';
+import { TRANSLATIONS } from '../data/translations';
 
 interface ProjectModalProps {
   project: ProjectCardData | null;
@@ -10,6 +12,7 @@ interface ProjectModalProps {
 }
 
 export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
+  const { lang } = useLanguage();
   const [activeScreenIndex, setActiveScreenIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
@@ -82,7 +85,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                 </div>
                 <div className="min-w-0">
                   <p className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 font-semibold leading-none mb-1">
-                    Страница дашборда
+                    {TRANSLATIONS.modal.dashboardScreen[lang]}
                   </p>
                   <h4 className="text-sm sm:text-base font-bold text-zinc-950 truncate tracking-tight">
                     {currentScreen.title}
@@ -93,7 +96,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               <div className="flex items-center gap-2 shrink-0">
                 {/* Подсказка управления с клавиатуры */}
                 {screens.length > 1 && (
-                  <div className="hidden sm:flex items-center gap-1 px-2 py-1 rounded-lg bg-zinc-100 text-zinc-500 text-[10px] font-mono" title="Листайте стрелками на клавиатуре">
+                  <div className="hidden sm:flex items-center gap-1 px-2 py-1 rounded-lg bg-zinc-100 text-zinc-500 text-[10px] font-mono" title={TRANSLATIONS.modal.keyboardHint[lang]}>
                     <kbd className="px-1 py-0.5 bg-white border border-zinc-200 rounded text-[9px] font-semibold shadow-2xs">←</kbd>
                     <kbd className="px-1 py-0.5 bg-white border border-zinc-200 rounded text-[9px] font-semibold shadow-2xs">→</kbd>
                   </div>
@@ -113,7 +116,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                   title="Развернуть скриншот на весь экран для детального просмотра"
                 >
                   <Maximize2 className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Во весь экран</span>
+                  <span className="hidden sm:inline">{TRANSLATIONS.modal.fullscreen[lang]}</span>
                 </button>
               </div>
             </div>
@@ -145,7 +148,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                   type="button"
                   onClick={onClose}
                   className="w-8 h-8 rounded-full bg-zinc-100 hover:bg-zinc-200 flex items-center justify-center text-zinc-600 hover:text-zinc-950 transition-colors cursor-pointer"
-                  aria-label="Закрыть модальное окно"
+                  aria-label={TRANSLATIONS.modal.closeAria[lang]}
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -175,16 +178,16 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                         <Database className="w-3.5 h-3.5" />
                       </div>
                       <span className="text-[11px] font-mono font-bold tracking-wider text-zinc-500 uppercase">
-                        01 / Архитектура данных
+                        {TRANSLATIONS.modal.blockArchitecture[lang]}
                       </span>
                     </div>
                     <div className="space-y-2 text-sm sm:text-[14.5px] text-zinc-700 leading-relaxed">
                       <p>
-                        <strong className="text-zinc-950 font-semibold">Источники:</strong>{' '}
+                        <strong className="text-zinc-950 font-semibold">{TRANSLATIONS.modal.sourcesLabel[lang]}</strong>{' '}
                         {project.architecture.sources}
                       </p>
                       <p>
-                        <strong className="text-zinc-950 font-semibold">Модель:</strong>{' '}
+                        <strong className="text-zinc-950 font-semibold">{TRANSLATIONS.modal.modelLabel[lang]}</strong>{' '}
                         {project.architecture.model}
                       </p>
                     </div>
@@ -198,7 +201,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                           <Sliders className="w-3.5 h-3.5" />
                         </div>
                         <span className="text-[11px] font-mono font-bold tracking-wider text-zinc-500 uppercase">
-                          02 / Инструменты отчёта
+                          {TRANSLATIONS.modal.blockFeatures[lang]}
                         </span>
                       </div>
                       <ul className="space-y-2 text-sm sm:text-[14.5px] text-zinc-700 leading-relaxed">
@@ -236,7 +239,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                           <TrendingUp className="w-3.5 h-3.5" />
                         </div>
                         <span className="text-[11px] font-mono font-bold tracking-wider text-zinc-500 uppercase">
-                          03 / Результаты анализа
+                          {TRANSLATIONS.modal.blockInsights[lang]}
                         </span>
                       </div>
                       <ul className="space-y-2 text-sm sm:text-[14.5px] text-zinc-700 leading-relaxed">
@@ -279,7 +282,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             <div className="pt-4 border-t border-zinc-100 mt-auto">
               <div className="mb-4">
                 <p className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 font-semibold mb-2">
-                  Использованные технологии
+                  {TRANSLATIONS.modal.technologies[lang]}
                 </p>
                 <div className="flex flex-wrap gap-1.5">
                   {project.tags.map((tag) => (
@@ -302,7 +305,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                   className="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-white text-xs font-semibold transition-colors cursor-pointer"
                 >
                   <Github className="w-4 h-4" />
-                  <span>Исходный код / Репозиторий</span>
+                  <span>{TRANSLATIONS.modal.sourceCode[lang]}</span>
                   <ExternalLink className="w-3.5 h-3.5 ml-auto text-zinc-400" />
                 </a>
               )}

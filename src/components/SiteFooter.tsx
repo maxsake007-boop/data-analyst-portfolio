@@ -1,7 +1,10 @@
 import React from 'react';
 import { ArrowUp } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import { TRANSLATIONS } from '../data/translations';
 
 export const SiteFooter: React.FC = () => {
+  const { lang } = useLanguage();
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -12,7 +15,7 @@ export const SiteFooter: React.FC = () => {
         
         {/* Left: Copyright */}
         <div>
-          <span>© 2026 Махсет Нарбеков</span>
+          <span>{TRANSLATIONS.footer.copyright[lang]}</span>
         </div>
 
         {/* Right: Back to top button */}
@@ -21,7 +24,7 @@ export const SiteFooter: React.FC = () => {
           className="inline-flex items-center gap-1.5 hover:text-zinc-950 transition-colors cursor-pointer p-1 font-medium"
           title="Наверх"
         >
-          <span>Наверх</span>
+          <span>{TRANSLATIONS.footer.backToTop[lang]}</span>
           <ArrowUp className="w-3.5 h-3.5" />
         </button>
 

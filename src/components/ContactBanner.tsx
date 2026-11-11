@@ -1,12 +1,15 @@
 import React from 'react';
 import { Send } from 'lucide-react';
 import { RevealOnScroll } from './RevealOnScroll';
+import { useLanguage } from '../context/LanguageContext';
+import { TRANSLATIONS } from '../data/translations';
 
 interface ContactBannerProps {
   onUnconfirmedLink?: () => void;
 }
 
 export const ContactBanner: React.FC<ContactBannerProps> = ({ onUnconfirmedLink }) => {
+  const { lang } = useLanguage();
   return (
     <section id="contact" className="pt-4 pb-6 px-6 sm:px-10 lg:px-14 w-full max-w-[1520px] mx-auto select-none scroll-mt-24">
       <RevealOnScroll direction="zoom" delay={80} duration={750}>
@@ -26,15 +29,16 @@ export const ContactBanner: React.FC<ContactBannerProps> = ({ onUnconfirmedLink 
           </div>
 
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold tracking-tight leading-tight text-white">
-              Давайте<br />свяжемся
-            </h2>
+            <h2
+              className="text-xl sm:text-2xl font-bold tracking-tight leading-tight text-white"
+              dangerouslySetInnerHTML={{ __html: TRANSLATIONS.contactBanner.title[lang] }}
+            />
           </div>
         </div>
 
         {/* Center: Friendly Note */}
         <div className="text-left lg:text-center text-xs sm:text-sm text-zinc-400 font-normal leading-relaxed max-w-sm">
-          Буду рад обсудить новые возможности, проекты и сотрудничество.
+          {TRANSLATIONS.contactBanner.note[lang]}
         </div>
 
         {/* Right: Telegram Button & Social Links in one line */}
@@ -46,7 +50,7 @@ export const ContactBanner: React.FC<ContactBannerProps> = ({ onUnconfirmedLink 
             className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white hover:bg-zinc-100 text-zinc-950 text-xs sm:text-sm font-bold shadow-md hover:shadow-xl hover:scale-[1.04] active:scale-95 transition-all duration-200 cursor-pointer"
           >
             <Send className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
-            <span>Написать в Telegram</span>
+            <span>{TRANSLATIONS.contactBanner.cta[lang]}</span>
           </a>
 
           <div className="flex items-center gap-4 text-xs font-semibold text-zinc-300">

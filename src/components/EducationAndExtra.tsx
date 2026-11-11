@@ -1,8 +1,11 @@
 import React from 'react';
 import { GraduationCap, Database, MapPin } from 'lucide-react';
 import { RevealOnScroll } from './RevealOnScroll';
+import { useLanguage } from '../context/LanguageContext';
+import { TRANSLATIONS } from '../data/translations';
 
 export const EducationAndExtra: React.FC = () => {
+  const { lang } = useLanguage();
   return (
     <section id="education" className="py-20 sm:py-24 px-8 sm:px-12 lg:px-16 w-full max-w-[1560px] mx-auto select-none border-t border-zinc-200/60 scroll-mt-24">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
@@ -11,9 +14,9 @@ export const EducationAndExtra: React.FC = () => {
         <div className="lg:col-span-7 flex flex-col">
           <RevealOnScroll direction="up" delay={50}>
             <div className="mb-8">
-              <span className="text-xs font-mono font-medium text-zinc-400 mb-1.5 block">04</span>
+              <span className="text-xs font-mono font-medium text-zinc-400 mb-1.5 block">{TRANSLATIONS.education.number}</span>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-950 tracking-tight">
-                Образование
+                {TRANSLATIONS.education.title[lang]}
               </h2>
             </div>
           </RevealOnScroll>
@@ -31,7 +34,7 @@ export const EducationAndExtra: React.FC = () => {
                     PROWEB
                   </h3>
                   <span className="text-xs sm:text-sm text-zinc-500 font-semibold block mt-1">
-                    Диплом с отличием • Январь 2026
+                    {TRANSLATIONS.education.degree[lang]}
                   </span>
                 </div>
               </div>
@@ -41,7 +44,7 @@ export const EducationAndExtra: React.FC = () => {
 
               {/* Right: Narrative Description */}
               <p className="text-xs sm:text-sm lg:text-[14.5px] text-zinc-700 leading-relaxed font-normal flex-1">
-                Защитил обе дипломные работы: YesCredit (скоринг кредитоспособности, FastAPI) и дашборд по анализу данных Netflix. После завершения курса разработал серию практических проектов: 5 бизнес-дашбордов в Power BI, реляционную модель базы данных в PostgreSQL с 8 аналитическими запросами и модульный ETL-пайплайн очистки данных на Python.
+                {TRANSLATIONS.education.narrative[lang]}
               </p>
             </div>
           </RevealOnScroll>
@@ -51,9 +54,9 @@ export const EducationAndExtra: React.FC = () => {
         <div className="lg:col-span-5 flex flex-col">
           <RevealOnScroll direction="up" delay={80}>
             <div className="mb-8">
-              <span className="text-xs font-mono font-medium text-zinc-400 mb-1.5 block">05</span>
+              <span className="text-xs font-mono font-medium text-zinc-400 mb-1.5 block">{TRANSLATIONS.extra.number}</span>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-950 tracking-tight">
-                Дополнительно
+                {TRANSLATIONS.extra.title[lang]}
               </h2>
             </div>
           </RevealOnScroll>
@@ -67,7 +70,7 @@ export const EducationAndExtra: React.FC = () => {
                   <Database className="w-6 h-6" strokeWidth={1.8} />
                 </div>
                 <span className="text-sm sm:text-[15px] text-zinc-800 font-medium leading-snug group-hover:text-zinc-950 transition-colors">
-                  Понимаю архитектуру DWH (хранилища данных), витрины Data Mart, Data Quality, OLTP и OLAP
+                  {TRANSLATIONS.extra.pill1[lang]}
                 </span>
               </div>
             </RevealOnScroll>
@@ -78,7 +81,7 @@ export const EducationAndExtra: React.FC = () => {
                   <MapPin className="w-6 h-6" strokeWidth={1.8} />
                 </div>
                 <span className="text-sm sm:text-[15px] text-zinc-800 font-medium leading-snug group-hover:text-zinc-950 transition-colors">
-                  Базируюсь в Ташкенте, готов к удалённой работе, в офисе и быстрому обучению
+                  {TRANSLATIONS.extra.pill2[lang]}
                 </span>
               </div>
             </RevealOnScroll>

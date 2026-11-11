@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { MapPin, Mail, Send, ArrowDown } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import { TRANSLATIONS } from '../data/translations';
 
 interface HeroSectionProps {
   isReady?: boolean;
@@ -73,6 +75,7 @@ const stickerVariants: Variants = {
 };
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ isReady = true, onUnconfirmedLink }) => {
+  const { lang } = useLanguage();
   return (
     <section id="hero" className="relative pt-6 sm:pt-10 pb-0 px-6 sm:px-10 lg:px-16 xl:px-24 w-full max-w-[1720px] mx-auto select-none overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 xl:gap-20 items-end min-h-[640px] lg:min-h-[740px] xl:min-h-[820px]">
@@ -89,7 +92,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isReady = true, onUnco
             variants={itemVariants}
             className="text-sm sm:text-base font-mono font-bold tracking-[0.25em] text-zinc-400 uppercase mb-4 block"
           >
-            ПРИВЕТ, Я
+            {TRANSLATIONS.hero.preTitle[lang]}
           </motion.span>
 
           {/* Heading: Махсет Нарбеков (Noticeably larger + entrance) */}
@@ -97,7 +100,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isReady = true, onUnco
             variants={itemVariants}
             className="text-6xl sm:text-7xl md:text-8xl xl:text-[96px] 2xl:text-[108px] font-black text-zinc-950 tracking-tighter leading-[0.92] mb-6"
           >
-            Махсет<br />Нарбеков
+            {TRANSLATIONS.hero.nameFirst[lang]}<br />{TRANSLATIONS.hero.nameLast[lang]}
           </motion.h1>
 
           {/* Subtitle / Role (Enlarged + entrance) */}
@@ -105,9 +108,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isReady = true, onUnco
             variants={itemVariants}
             className="text-2xl sm:text-3xl lg:text-[32px] xl:text-[36px] font-extrabold text-zinc-900 tracking-tight mb-6 flex flex-wrap items-center gap-3"
           >
-            <span>Data Analyst / BI-аналитик</span>
+            <span>{TRANSLATIONS.hero.roleTitle[lang]}</span>
             <span className="text-zinc-300 font-light">|</span>
-            <span>Power BI • SQL • Python</span>
+            <span>{TRANSLATIONS.hero.roleStack}</span>
           </motion.div>
 
           {/* Short Bio Description (Enlarged + entrance) */}
@@ -115,7 +118,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isReady = true, onUnco
             variants={itemVariants}
             className="text-lg sm:text-xl lg:text-[23px] text-zinc-600 font-normal leading-relaxed max-w-xl mb-10"
           >
-            Практический анализ данных и BI: продвинутый SQL (PostgreSQL, CTE, оконные функции), очистка и подготовка данных на Python (Pandas), базовый Excel и интерактивные корпоративные дашборды в Power BI (звёздные схемы, DAX, RLS).
+            {TRANSLATIONS.hero.bio[lang]}
           </motion.p>
 
           {/* Meta Contact Details Row (Icons + Info, Enlarged + entrance) */}
@@ -125,7 +128,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isReady = true, onUnco
           >
             <div className="inline-flex items-center gap-2.5">
               <MapPin className="w-5 h-5 text-zinc-900 shrink-0" />
-              <span>Ташкент / Удалённо</span>
+              <span>{TRANSLATIONS.hero.location[lang]}</span>
             </div>
 
             <a
@@ -175,7 +178,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isReady = true, onUnco
               className="inline-flex items-center gap-2.5 text-sm sm:text-[15px] font-semibold text-zinc-500 hover:text-zinc-950 transition-colors group cursor-pointer"
             >
               <ArrowDown className="w-4 h-4 animate-bounce-soft text-zinc-600 group-hover:text-zinc-950" />
-              <span>Листайте вниз</span>
+              <span>{TRANSLATIONS.hero.scrollDown[lang]}</span>
             </a>
           </motion.div>
 
