@@ -55,7 +55,7 @@ export const SkillsMatrix: React.FC = () => {
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 mt-0.5 shrink-0" />
-                <span>Дизайн канваса в Figma, принципы гештальта</span>
+                <span>Эргономика отчётов, принципы визуализации и гештальта</span>
               </li>
             </ul>
           </div>

@@ -60,7 +60,7 @@ export const CandidateHero: React.FC = () => {
 
           {/* Authentic, concise "About Me" directly from Resume.md */}
           <p className="text-sm sm:text-base text-zinc-700 leading-relaxed max-w-2xl mb-6 font-normal">
-            Выпускник программы PROWEB (диплом с отличием, январь 2026). Строю отчёты в Power BI (звёздные схемы, продвинутый DAX, RLS, дизайн в Figma), владею продвинутым SQL (PostgreSQL, CTE, оконные функции), очисткой данных на Python (Pandas) и базовым Excel для работы.
+            Выпускник программы PROWEB (диплом с отличием, январь 2026). Строю отчёты в Power BI (звёздные схемы, продвинутый DAX, RLS), владею продвинутым SQL (PostgreSQL, CTE, оконные функции), очисткой данных на Python (Pandas) и базовым Excel для работы.
           </p>
 
           {/* Quick Action Buttons */}

@@ -115,7 +115,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isReady = true, onUnco
             variants={itemVariants}
             className="text-lg sm:text-xl lg:text-[23px] text-zinc-600 font-normal leading-relaxed max-w-xl mb-10"
           >
-            Практический анализ данных и BI: продвинутый SQL (PostgreSQL, CTE, оконные функции), очистка и подготовка данных на Python (Pandas), базовый Excel и интерактивные корпоративные дашборды в Power BI (звёздные схемы, DAX, RLS, дизайн в Figma).
+            Практический анализ данных и BI: продвинутый SQL (PostgreSQL, CTE, оконные функции), очистка и подготовка данных на Python (Pandas), базовый Excel и интерактивные корпоративные дашборды в Power BI (звёздные схемы, DAX, RLS).
           </motion.p>
 
           {/* Meta Contact Details Row (Icons + Info, Enlarged + entrance) */}
